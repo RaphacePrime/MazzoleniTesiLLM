@@ -13,23 +13,28 @@ Inserisci la descrizione e clicca su **Genera Test Script** per ottenere il JSON
 if "output_text" not in st.session_state:
     st.session_state.output_text = ""
 
-# Input per la descrizione del caso d'uso
 user_prompt = st.text_area("📝 Inserisci la descrizione del caso d'uso:", height=200)
 
-# Bottone per generare il test script
 if st.button("🚀 Genera il Test"):
     if user_prompt.strip():
-        # Esegue lo script llama_saveMac.py con il prompt come input
-        result = subprocess.run(["python3", "llama8b_save.py"], input=user_prompt, text=True, capture_output=True)
+        try:
+            result = subprocess.run(
+                ["python", "llama8bNoBase_save.py"],
+                input=user_prompt,
+                text=True,
+                encoding="utf-8",
+                capture_output=True
+            )
+            st.session_state.output_text = result.stdout.strip()
 
-        st.session_state.output_text = result.stdout.strip()
-
-        if result.stderr:
-            st.error(f"Errore durante l'esecuzione: {result.stderr}")
+            if result.stderr:
+                st.error(f"Errore durante l'esecuzione:\n{result.stderr}")
+        except Exception as e:
+            st.error(f"Errore imprevisto: {e}")
 
 if st.session_state.output_text:
     st.subheader("📄 Output Generato:")
-    st.code(st.session_state.output_text, language="json")
+    st.text_area("Output JSON", st.session_state.output_text, height=400)
 
     st.download_button("⬇️ Scarica TXT", st.session_state.output_text, file_name="test_script.txt", mime="text/plain")
     st.download_button("⬇️ Scarica JSON", st.session_state.output_text, file_name="test_script.json", mime="application/json")
