@@ -65,7 +65,7 @@ data = {
 
     # Numero massimo di token che il modello può generare nella risposta.
     # Valore aumentato per permettere risposte più lunghe e dettagliate.
-    "max_tokens": 8000,
+    "max_tokens": 4096,
 
     # Sequenze che interrompono la generazione quando vengono rilevate nella risposta.
     # Utile per fermare output non desiderati o delimitare le risposte.
