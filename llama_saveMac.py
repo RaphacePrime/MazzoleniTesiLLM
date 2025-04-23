@@ -2,7 +2,7 @@ import requests
 import os
 from datetime import datetime
 
-save_folder = os.path.expanduser("/Users/raphaelmazzoleni/Desktop/RaphaelMac/Università/TesiLLMTesting/GenerazioneLLama/LLama3.2Abliterate_Output8BMac")
+save_folder = os.path.expanduser("/Users/raphaelmazzoleni/Desktop/RaphaelMac/Università/MazzoleniTesiLLM/LLama3.1_Output8B")
 os.makedirs(save_folder, exist_ok=True)
 
 base_prompt = """ 
