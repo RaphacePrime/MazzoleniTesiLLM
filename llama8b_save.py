@@ -46,14 +46,32 @@ url = "http://localhost:11434/api/generate"  # Assicurarsi che Ollama sia in ese
 data = {
     "model": "mannix/llama3.1-8b-abliterated:latest",
     "prompt": full_prompt,
-    "stream": False,
-    "temperature": 0.0,  
-    "top_p": 0.5,  
-    "top_k": 0,  
-    "max_tokens": 8000,  # Aumentato per garantire risposte più dettagliate
-    "stop": ["\n\n", "###"]  
 
+    # Se True, la risposta viene trasmessa man mano che viene generata (streaming).
+    # Se False, si ottiene la risposta tutta insieme. Utile per risposte lunghe o per post-elaborazione.
+    "stream": False,
+
+    # Temperature controlla il livello di casualità della generazione.
+    # 0.0 = completamente deterministica, 1.0 = molto creativa/variabile.
+    "temperature": 0.0,
+
+    # top_p (nucleus sampling) limita la generazione ai token che compongono la "top p" probabilità cumulata.
+    # Un valore di 0.5 significa che il modello considera solo i token che insieme coprono il 50% di probabilità.
+    "top_p": 0.5,
+
+    # top_k limita la generazione ai k token più probabili.
+    # Un valore di 0 significa che non c'è limite sul numero di token considerati.
+    "top_k": 0,
+
+    # Numero massimo di token che il modello può generare nella risposta.
+    # Valore aumentato per permettere risposte più lunghe e dettagliate.
+    "max_tokens": 8000,
+
+    # Sequenze che interrompono la generazione quando vengono rilevate nella risposta.
+    # Utile per fermare output non desiderati o delimitare le risposte.
+    "stop": ["\n\n", "###"]
 }
+
 
 response = requests.post(url, json=data)
 
